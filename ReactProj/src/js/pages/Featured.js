@@ -1,6 +1,6 @@
 import React from "react";
 
-import Article from "../components/Article";
+import Product from "../components/Product";
 
 export default class Featured extends React.Component {
   render() {
@@ -17,7 +17,7 @@ export default class Featured extends React.Component {
       "Some Other Article",
       "Yet Another Article",
       "Still More",
-    ].map((title, i) => <Article key={i} title={title}/> );
+    ].map((title, i) => <Product key={i} title={title}/> );
 
     const adText = [
       "Ad spot #1",
