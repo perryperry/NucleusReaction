@@ -1,0 +1,7 @@
+Notes:
+
+Set initial this.state in the constructor. When state changes on a dom, the dom will rerender if there are changes
+
+	this.state = {name: "will"};
+
+	{this.state.name}
