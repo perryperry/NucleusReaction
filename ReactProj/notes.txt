@@ -5,3 +5,26 @@ Set initial this.state in the constructor. When state changes on a dom, the dom 
 	this.state = {name: "will"};
 
 	{this.state.name}
+
+
+Concat
+	var a = [0,1,2]
+	var b = a.concat(3)
+	a
+	b
+Filter
+	var b = a.filter((val) => val !== 2)		This filters out the values that are 2
+	b 				becomes [0, 1]
+
+	var a = {name: "Will", things: [0,1,2]}
+	var b = Object.assign({}, a, {name: "Fred"})
+	b.things = a.thing.concat(3)
+
+	npm install -S react
+	npm install -S react-redux
+	npm install -S redux
+	npm install -S redux-logger
+	npm install -S redux-thunk
+	npm install -S axios
+	action requires a 'type' command
+	using const newState = {...state}; the {...state} creates a new version of the state example: state = {...state, age: action.payload,};

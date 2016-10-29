@@ -1,16 +1,32 @@
 import React from "react";
+import { Link } from "react-router";
 
 export default class Product extends React.Component {
   render() {
-    const { title } = this.props;
+    const { product } = this.props;
+    const url = "https://ccstore-z5ia.oracleoutsourcing.com";
 
-    return (
-      <div class="col-md-4">
-        <h4>{title}</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe rem nisi accusamus error velit animi non ipsa placeat. Recusandae, suscipit, soluta quibusdam accusamus a veniam quaerat eveniet eligendi dolor consectetur.</p>
-        <p>Product Info here</p>
-        <a class="btn btn-default" href="#">More Info</a>
-      </div>
-    );
+    
+      if(product !== undefined) {
+        return (
+          <div class="col-md-3 shop-item"> 
+            <Link to={'/products/'+product.id}>
+              <img src={url + product.primaryMediumImageURL}/>
+              <div class="detail">
+                <h2>{product.displayName}</h2>
+                <small class="previous-price">{product.listPrice}</small>
+                <p>{product.salePrice}</p>
+              </div>
+            </Link>
+          
+          
+            
+
+          </div>
+            
+        );
+    } else {
+      return null;
+    }
   }
 }
