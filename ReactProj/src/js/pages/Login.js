@@ -1,33 +1,22 @@
 import React from 'react'
 import { connect } from "react-redux";
 import { Field, reduxForm } from 'redux-form'
-import {setUserName, setUserAge} from '../actions/userActions';
+import {setUserAge, setUserName, fetchUser} from '../actions/userActions';
 
-// const Login = (props) => {
-//   const { handleSubmit, pristine, reset, submitting } = props
-//   return (
-//     <form onSubmit={handleSubmit(setUserName)}>
-//       <div>
-//         <label>First Name</label>
-//         <div>
-//           <Field name="name" component="input" type="text" placeholder="First Name"/>
-//         </div>
-//       </div>
-//       <div>
-//         <button type="submit" disabled={pristine || submitting}>Submit</button>
-//         <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
-//       </div>
-//     </form>
-//   )
-// }
+@connect((store) => {
+  return {
+    user: store.user.user,
+  };
 
-// export default reduxForm({
-//   form: 'simple'  // a unique identifier for this form
-// })(Login)
-
+})
 
 export class Login extends React.Component {
-  constructor(props) {
+  
+    componentWillMount() {
+        this.props.dispatch(fetchUser())
+    }
+
+    constructor(props) {
     super(props);
     this.state = {
       name: '',
@@ -38,7 +27,7 @@ export class Login extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+  
   handleNameChange(event) {
     // Note: with uncontrolled inputs, you don't
     // have to put the value in the state.
@@ -53,9 +42,9 @@ export class Login extends React.Component {
 
   handleSubmit(event) {
     // alert('Text field value is: ' + this.state.value);
-    setUserName(this.state.name);
+    this.props.dispatch(setUserName(this.state.name));
     
-    setUserAge(this.state.age);
+    this.props.dispatch(setUserAge(this.state.age));
   }
 
   render() {
@@ -65,15 +54,15 @@ export class Login extends React.Component {
           type="text"
           placeholder="First Name"
           value={this.state.name}
-          onChange={this.handleNameChange} />
+          onChange={this.handleNameChange.bind(this)} />
          
           <input
           type="text"
           placeholder="Age"
            value={this.state.age}
-          onChange={this.handleAgeChange}  />
+          onChange={this.handleAgeChange.bind(this)}  />
 
-        <button onClick={this.handleSubmit}>
+        <button onClick={this.handleSubmit.bind(this)}>
           Submit
         </button>
       </div>
