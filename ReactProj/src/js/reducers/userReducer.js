@@ -1,3 +1,4 @@
+
 export default function reducer(state={
     user: {
       id: null,
@@ -6,6 +7,7 @@ export default function reducer(state={
     },
     fetching: false,
     fetched: false,
+    created: false,
     error: null,
   }, action) {
 
@@ -34,6 +36,12 @@ export default function reducer(state={
         return {
           ...state,
           user: {...state.user, age: action.payload},
+        }
+      }
+      case "CREATE_USER": {
+        return {
+          ...state,
+          user: action.payload,
         }
       }
     }

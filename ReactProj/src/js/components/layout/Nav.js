@@ -1,12 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { IndexLink, Link } from "react-router";
-import {fetchUser} from "../../actions/userActions"
 
 @connect((store) => {
   return {
     user: store.user.user,
-    userFetched: store.user.fetched,
+    cart: store.cart.cart,
   };
 })
 
@@ -23,12 +22,9 @@ export default class Nav extends React.Component {
     this.setState({collapsed});
   }
 
-  componentWillMount() {
-    this.props.dispatch(fetchUser())
-  }
-
   render() {
     const { user } = this.props;
+    const { cart }  = this.props;
     const { collapsed } = this.state;
     const navClass = collapsed ? "collapse" : "";
 
@@ -45,16 +41,6 @@ export default class Nav extends React.Component {
           </div>
           <div class={"navbar-collapse " + navClass} id="navbar-collapse">
 
-            
-
-
-            <h1> <b>Name:</b> {user.name} <b>Age:</b> {user.age}</h1>
-            
-
-
-
-
-
             <ul class="nav navbar-nav">
               <li activeClassName="active" onlyActiveOnIndex={true}>
                 <IndexLink to="/" onClick={this.toggleCollapse.bind(this)}>Featured</IndexLink>
@@ -67,14 +53,23 @@ export default class Nav extends React.Component {
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li activeClassName="active">
-                <Link to="login" onClick={this.toggleCollapse.bind(this)}>TEST</Link>
-              </li>
-              <li>        
-                  <a href="//slate.lemonstand.com/login">Login</a>
-              </li>
+             
+              {
+                user.created ?  
+
+                <li> 
+                  <Link to="#"> Welcome <b>{user.name}</b>!</Link>
+                </li>
+
+                : 
+
+                <li activeClassName="active">
+                      <Link to="login" onClick={this.toggleCollapse.bind(this)}>Login</Link>
+                </li>
+              }       
+             
               <li id="normal-cart">
-                <a id="normal-carts" href="//slate.lemonstand.com/cart" data-toggle="dropdown"><span class="hidden-xs" id="navbar-totals">0 Items</span></a>
+              { user.created ?<Link to="cart" onClick={this.toggleCollapse.bind(this)}>{cart.length} Items</Link> : null }
                 <div id="mini-cart" class="dropdown-menu">
                     <h6>No items in cart.</h6>
                 </div>

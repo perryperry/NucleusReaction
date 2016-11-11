@@ -18,14 +18,13 @@ export default class Products extends React.Component {
   render() {
     const { products } = this.props;
     console.log({products});
-
-
-
-
-
+    var i = 0;
      const Products = products.map( product => <Product key={product.id} product={product}/>)
     return (
       <div class="col-md-12">
+         <div class="row">
+          <h3>Products</h3>
+        </div>
         <div class="row">
           {Products}
         </div>

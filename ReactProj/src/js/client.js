@@ -9,6 +9,7 @@ import Featured from "./pages/Featured";
 import Layout from "./pages/Layout";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
+import Cart from "./pages/Cart";
 
 const app = document.getElementById('app');
 
@@ -19,6 +20,7 @@ ReactDOM.render(<Provider store={store}>
       <Route path="products(/:productId)" name="products" component={Products}></Route>
       <Route path="settings" name="settings" component={Settings}></Route>
       <Route path="login" name="login" component={Login}></Route>
+      <Route path="cart" name="cart" component={Cart}></Route>
     </Route>
   </Router>
   </Provider>,

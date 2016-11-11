@@ -1,14 +1,7 @@
 import React from 'react'
-import { connect } from "react-redux";
+
 import { Field, reduxForm } from 'redux-form'
-import {setUserAge, setUserName, fetchUser} from '../actions/userActions';
-
-@connect((store) => {
-  return {
-    user: store.user.user,
-  };
-
-})
+import {getAuthenticated, fetchUser, setUserAge, setUserName, createUser, login} from '../actions/userActions';
 
 export class Login extends React.Component {
   
@@ -41,31 +34,33 @@ export class Login extends React.Component {
   }
 
   handleSubmit(event) {
-    // alert('Text field value is: ' + this.state.value);
-    this.props.dispatch(setUserName(this.state.name));
-    
-    this.props.dispatch(setUserAge(this.state.age));
+    this.props.dispatch(createUser(this.state.name, this.state.age));
   }
 
   render() {
     return (
-      <div>
+     <div class="col-md-12">
+      <div class="row">
+        <h3>Login</h3>
+      </div>
+      <div class="row">
         <input
           type="text"
           placeholder="First Name"
           value={this.state.name}
           onChange={this.handleNameChange.bind(this)} />
-         
+         <br/><br/>
           <input
           type="text"
           placeholder="Age"
            value={this.state.age}
           onChange={this.handleAgeChange.bind(this)}  />
-
+          <br/><br/>
         <button onClick={this.handleSubmit.bind(this)}>
           Submit
         </button>
       </div>
+    </div>
     );
   }
 }
