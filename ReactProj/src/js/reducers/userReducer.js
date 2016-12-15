@@ -3,15 +3,26 @@ export default function reducer(state={
     user: {
       id: null,
       name: null,
-      age: null,
+      password: null,
     },
     fetching: false,
     fetched: false,
     created: false,
+    loggedIn: false,
     error: null,
   }, action) {
 
     switch (action.type) {
+      case "LOGIN_DENY_USER": {
+        return {...state, loggedIn: false} 
+      }
+      case "LOGIN_SUCCESS_USER": {
+        return {
+          ...state, 
+          loggedIn: true, 
+          user: action.payload,
+        } 
+      }
       case "FETCH_USER": {
         return {...state, fetching: true}
       }
@@ -32,13 +43,19 @@ export default function reducer(state={
           user: {...state.user, name: action.payload},
         }
       }
-      case "SET_USER_AGE": {
+      case "SET_USER_PASSWORD": {
         return {
           ...state,
-          user: {...state.user, age: action.payload},
+          user: {...state.user, password: action.payload},
         }
       }
       case "CREATE_USER": {
+        return {
+          ...state,
+          user: action.payload,
+        }
+      }
+      case "SIGN_OUT_USER": {
         return {
           ...state,
           user: action.payload,

@@ -1,4 +1,5 @@
 import axios from "axios";
+import cookie from 'react-cookie';
 
 export function fetchUser() {
     console.log("fetchUser");
@@ -7,39 +8,107 @@ export function fetchUser() {
     type: "FETCH_USER_FULFILLED",
     payload: {
       name: "Will",
-      age: 35,
+      password: "password",
     }
   }
 }
 
 export function setUserName(name) {
   console.log("setUserName: " + name);
+
   return {
     type: 'SET_USER_NAME',
     payload: name,
   }
 }
 
-export function setUserAge(age) {
-    console.log("setUserAge: " + age);
+export function setUserPassword(password) {
+    console.log("setUserPassword: " + password);
     return {
-      type: 'SET_USER_AGE',
-      payload: age,
+      type: 'SET_USER_PASSWORD',
+      payload: password,
     }
 
   }
 
-export function createUser(name, age) {
-   console.log("**** Creating user ****\nname: " + name + " age: " + age);
+export function createUser(name, password) {
+  console.log("**** Creating user ****\nname: " + name + " password: " + password);
+
+  var oldName = cookie.load('userName');
+
+  if(name !== oldName) {
+    alert("They don't match!");
+  } else {
+    alert("Oh, but they do match.");
+  }
+  cookie.save('userName', name, {path: '/'});
+
   return {
     type: 'CREATE_USER',
     payload:{
       name: name,
-      age: age,
+      password: password,
       created: true,
     }
   }
 }
+
+export function signupUser(name, password) {
+  console.log("Signing up: \nname: " + name + " password: " + password);
+  cookie.save('userName', name, {path: '/'});
+  cookie.save('userPassword', password, {path: '/'});
+  return {
+    type: 'CREATE_USER',
+    payload:{
+      name: name,
+      password: password,
+      created: true,
+    }
+  }
+}
+
+
+
+export function signOutUser() {
+  console.log("**** User signing out ****");
+
+  alert(cookie.load('userName'));
+
+  return {
+    type: 'SIGN_OUT_USER',
+    payload:{
+      name: "",
+      password: "",
+      created: false,
+      cart:[],
+    }
+  }
+}
+
+export function loginUser(name, password) {
+  console.log("Attempting to log in");
+  var storedName = cookie.load('userName');
+  var storedPassword = cookie.load('userPassword');
+
+  if(name === storedName && password === storedPassword) {
+    console.log("login successful!");
+    return {
+        type: 'LOGIN_SUCCESS_USER',
+        payload:{
+          name: name,
+          password: password,
+          created: true,
+        }
+    }
+  } else {
+      console.log("Access denied!");
+      return {
+        type: 'LOGIN_DENY_USER',
+      }
+  }
+}
+
+
 
 // get the current user from the oracle commerce cloud
 export function getCurrentUser() {

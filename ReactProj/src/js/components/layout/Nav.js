@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { IndexLink, Link } from "react-router";
+import { signOutUser } from "../../actions/userActions"
 
 @connect((store) => {
   return {
@@ -21,6 +22,11 @@ export default class Nav extends React.Component {
     const collapsed = !this.state.collapsed;
     this.setState({collapsed});
   }
+
+  signOut() {
+    this.props.dispatch(signOutUser());
+  }
+
 
   render() {
     const { user } = this.props;
@@ -58,7 +64,7 @@ export default class Nav extends React.Component {
                 user.created ?  
 
                 <li> 
-                  <Link to="#"> Welcome <b>{user.name}</b>!</Link>
+                  <Link to="profile" onClick={this.toggleCollapse.bind(this)}> Welcome <b>{user.name}</b>!</Link>
                 </li>
 
                 : 
@@ -66,14 +72,27 @@ export default class Nav extends React.Component {
                 <li activeClassName="active">
                       <Link to="login" onClick={this.toggleCollapse.bind(this)}>Login</Link>
                 </li>
+
               }       
-             
+
+              {
+                ! user.created ? 
+                 <li activeClassName="active">
+                      <Link to="signup" onClick={this.toggleCollapse.bind(this)}>Sign up</Link>
+                </li>
+                : 
+                null
+              }
               <li id="normal-cart">
               { user.created ?<Link to="cart" onClick={this.toggleCollapse.bind(this)}>{cart.length} Items</Link> : null }
                 <div id="mini-cart" class="dropdown-menu">
                     <h6>No items in cart.</h6>
                 </div>
               </li>
+
+              { user.created ? <li id="normal-cart"><Link to="userSignOut" onClick={this.signOut.bind(this)} >Sign out</Link> </li> : null }
+
+
               <li id="mobile-cart">
                 <a href="//slate.lemonstand.com/cart">View Cart</a>
               </li>

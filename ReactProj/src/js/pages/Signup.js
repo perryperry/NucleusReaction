@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { Field, reduxForm } from 'redux-form'
-import {getAuthenticated, fetchUser, setUserAge, setUserName, createUser, loginUser} from '../actions/userActions';
+import {getAuthenticated, fetchUser, setUserPassword, setUserName, createUser, signupUser} from '../actions/userActions';
 
-export class Login extends React.Component {
+export class Signup extends React.Component {
 
     constructor(props) {
     super(props);
@@ -30,14 +30,14 @@ export class Login extends React.Component {
   }
 
   handleSubmit(event) {
-    this.props.dispatch(loginUser(this.state.name, this.state.password));
+    this.props.dispatch(signupUser(this.state.name, this.state.password));
   }
 
   render() {
     return (
      <div class="col-md-12">
       <div class="row">
-        <h3>Login</h3>
+        <h3>Signup</h3>
       </div>
       <div class="row">
         <input
@@ -63,5 +63,4 @@ export class Login extends React.Component {
 
 export default reduxForm({
   form: 'simple'  // a unique identifier for this form
-})(Login)
-
+})(Signup)
