@@ -72,8 +72,6 @@ export function signupUser(name, password) {
 export function signOutUser() {
   console.log("**** User signing out ****");
 
-  alert(cookie.load('userName'));
-
   return {
     type: 'SIGN_OUT_USER',
     payload:{
